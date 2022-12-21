@@ -27,6 +27,8 @@ public class ImageForm extends JFrame{
     File originalFile;
     File outputFile;
 
+    String extension;
+
     public ImageForm() {
         this.setContentPane(panel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,7 +52,7 @@ public class ImageForm extends JFrame{
                         outputImage = compression.getCompressionImage();
                         ((ImagePanel) panelCompressedImage).setImage(outputImage);
                         panelCompressedImage.repaint();
-                        String extension = originalFile.getName().substring(originalFile.getName().indexOf(".") + 1);
+                        extension = originalFile.getName().substring(originalFile.getName().indexOf(".") + 1);
 
                         ImageIO.write(outputImage, extension, new File("compressImage." + extension) );
                         outputFile = new File("compressImage." + extension);
@@ -82,6 +84,17 @@ public class ImageForm extends JFrame{
         });
 
 
+        buttonSaveCompressedImage.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                outputFile = new File("compressImage." + extension);
+                try {
+                    ImageIO.write(outputImage, extension, outputFile);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
     }
 
     private void createUIComponents() {
